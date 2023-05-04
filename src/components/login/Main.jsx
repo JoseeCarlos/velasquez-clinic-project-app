@@ -10,21 +10,30 @@ import {
 
 import Input from '../input/main';
 import { useNavigation } from '@react-navigation/native';
+import ResetPasswordModal from '../resetPassword/Main';
 
 const Login = () => {
   const navigation = useNavigation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [resetPasswordModalVisible, setResetPasswordModalVisible] = useState(false);
 
   const handleEmailChange = (text) => setEmail(text);
   const handlePasswordChange = (text) => setPassword(text);
   const handleLoginPress = () => alert(`Email: ${email} Password: ${password}`);
   const handleGoogleLogin = () => alert('Iniciar sesión con Google');
   const handleFacebookLogin = () => alert('Iniciar sesión con Facebook');
-  const handleForgotPasswordPress = () => alert('¿Olvidaste tu contraseña?');
   const handleSignUpPress = () => {
     navigation.navigate('Signup');
   }
+  const handleResetPassword = () => {
+    setResetPasswordModalVisible(true);
+  }
+
+  const handleLogin = () => {
+    navigation.navigate('Home');
+  }
+  
 
   return (
     <View style={styles.container}>
@@ -48,13 +57,13 @@ const Login = () => {
       />
       <TouchableOpacity
         style={styles.button}
-        onPress={handleLoginPress}
+        onPress={handleLogin}
       >
         <Text style={styles.buttonText}>Iniciar sesión</Text>
       </TouchableOpacity>
       <TouchableOpacity
           style={styles.forgotPasswordLink}
-          onPress={handleForgotPasswordPress}
+          onPress={handleResetPassword}
         >
           <Text style={styles.bottomLinksText}>¿Olvidaste tu contraseña?</Text>
         </TouchableOpacity>
@@ -68,7 +77,7 @@ const Login = () => {
         onPress={handleFacebookLogin}
       >
         <View style={styles.socialButtonIcon}>
-          <Image source={require('../../assets/google-logo.png')} style={styles.socialButtonIconImage} />
+          <Image source={require('../../../assets/google-logo.png')} style={styles.socialButtonIconImage} />
         </View>
         <Text style={styles.socialButtonText}>Iniciar sesión con google</Text>
       </TouchableOpacity>
@@ -77,7 +86,9 @@ const Login = () => {
           onPress={handleSignUpPress}
         >
           <Text style={styles.bottomLinksTextRegister}>¿No tienes cuenta? <Text style={styles.TextButtonRegister} >Regístrate</Text> </Text>
-        </TouchableOpacity>
+      </TouchableOpacity>
+      
+      <ResetPasswordModal visible={resetPasswordModalVisible} onClose={() => setResetPasswordModalVisible(false)}/>
     </View>
   );
 };
