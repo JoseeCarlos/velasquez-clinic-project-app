@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
 
 const ScheduleCard = ({ time, isAvailable }) => {
   const cardStyle = isAvailable ? styles.availableCard : styles.occupiedCard;
@@ -20,7 +20,11 @@ const ScheduleList = ({ schedule }) => {
       </View>
       <View style={styles.scheduleContainer}>
         {schedule.map((item, index) => (
-          <ScheduleCard key={index} time={item.time} isAvailable={item.isAvailable} />
+          <ScheduleCard
+            key={index}
+            time={item.time}
+            isAvailable={item.isAvailable}
+          />
         ))}
       </View>
     </View>
@@ -29,51 +33,51 @@ const ScheduleList = ({ schedule }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 10,
     marginVertical: 10,
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: "center",
+    alignItems: "center",
   },
   titleContainer: {
-    marginBottom: 10
+    marginBottom: 10,
   },
   titleText: {
     fontSize: 18,
-    fontWeight: 'bold'
+    fontWeight: "bold",
   },
   scheduleContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between'
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
   },
   card: {
-    width: '48%',
+    width: "48%",
     aspectRatio: 1,
     borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 10
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 10,
   },
   availableCard: {
-    backgroundColor: '#6BBE9C'
+    backgroundColor: "#6BBE9C",
   },
   occupiedCard: {
-    backgroundColor: '#E17055'
+    backgroundColor: "#E17055",
   },
   cardText: {
     fontSize: 16,
-    fontWeight: 'bold',
-    color: '#fff'
+    fontWeight: "bold",
+    color: "#fff",
   },
   availableText: {
-    color: '#fff'
+    color: "#fff",
   },
   occupiedText: {
-    color: '#fff'
-  }
+    color: "#fff",
+  },
 });
 
 export default ScheduleList;

@@ -1,76 +1,125 @@
-
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import React from "react";
+import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
 function Menu({ isOpen, navigation, toggleMenu }) {
-  if (!isOpen) {
-    return null;
-  }
-
   return (
-    <View style={styles.sideMenu}>
-      <TouchableOpacity onPress={toggleMenu}>
-        <Ionicons name="close-outline" size={32} color="#fff" style={styles.closeIcon} />
-      </TouchableOpacity>
-      <View style={styles.header}>
-        <Image
-          style={styles.profileImage}
-          source={require('../../../assets/empty_image.png')}
-        />
-        <Text style={styles.profileName}>Juan Perez</Text>
+    <>
+      {isOpen && <View style={styles.overlay} />}
+      <View style={[styles.sideMenu, isOpen && styles.open]}>
+        <TouchableOpacity onPress={toggleMenu}>
+          <Ionicons
+            name="close-outline"
+            size={32}
+            color="#1DA1F2"
+            style={styles.closeIcon}
+          />
+        </TouchableOpacity>
+        <View style={styles.header}>
+          <Image
+            style={styles.profileImage}
+            source={require("../../../assets/me.png")}
+            resizeMode="cover"
+          />
+          <View style={styles.userInfo}>
+            <Text style={styles.profileName}>Juan Perez</Text>
+            <Text style={styles.username}>juanperez</Text>
+          </View>
+        </View>
+        <TouchableOpacity onPress={() => navigation.navigate("EditProfile")}>
+          <View style={styles.menuItemContainer}>
+            <Ionicons
+              name="person-circle-outline"
+              size={24}
+              color="#1DA1F2"
+              style={styles.menuItemIcon}
+            />
+            <Text style={styles.menuItem}>Perfil</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("Lists")}>
+          <Text style={styles.menuItem}>Listas</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("Topics")}>
+          <Text style={styles.menuItem}>Temas</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("Settings")}>
+          <Text style={styles.menuItem}>Configuración y privacidad</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("Help")}>
+          <Text style={styles.menuItem}>Centro de ayuda</Text>
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-        <Text style={styles.menuItem}>Perfil</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('Settings')}>
-        <Text style={styles.menuItem}>Configuración</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('Help')}>
-        <Text style={styles.menuItem}>Ayuda</Text>
-      </TouchableOpacity>
-    </View>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  sideMenu: {
-    position: 'absolute',
+  overlay: {
+    position: "absolute",
     left: 0,
     top: 0,
     bottom: 0,
-    width: '80%',
-    backgroundColor: '#fff',
-    padding: 20,
-    borderRadius: 10,
+    right: 0,
+    backgroundColor: "#000",
+    opacity: 0.5,
+  },
+  sideMenu: {
+    position: "absolute",
+    left: 0,
+    top: 0,
+    bottom: 0,
+    width: "90%",
+    backgroundColor: "#fff",
+    paddingVertical: 30,
+    paddingHorizontal: 20,
+    zIndex: 1,
+    transform: [{ translateX: -400 }],
+  },
+  open: {
+    transform: [{ translateX: 0 }],
   },
   closeIcon: {
-    alignSelf: 'flex-end',
-    marginBottom: 20,
-    color: '#000'
+    alignSelf: "flex-end",
+    marginBottom: 10,
+    color: "#000",
   },
   header: {
-    height: 100,
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 20,
   },
   profileImage: {
-    width: 100,
-    height: 100,
-    borderRadius: 25,
-    // Agregar otras propiedades de estilo según se necesite
+    width: 60,
+    height: 60,
+    borderRadius: 50,
+  },
+  userInfo: {
+    marginLeft: 15,
+  },
+  menuItemContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  menuItemIcon: {
+    marginRight: 10,
+    color: '#000'
   },
   profileName: {
-    marginTop: 10,
-    fontSize: 16,
-    fontWeight: 'bold',
-    
+    color: "#000",
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  username: {
+    color: "#A7A7A7",
+    fontSize: 14,
+    marginTop: 5,
   },
   menuItem: {
-    color: '#000',
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginVertical: 20,
+    color: "#000",
+    fontSize: 20,
+    fontWeight: "bold",
+    marginVertical: 15,
   },
 });
 

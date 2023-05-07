@@ -7,6 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import Card from '../homeCard/HomeCard';
 import PendingAppointments from '../quotes/Main';
 import AddAppointment from '../addAppointment/Main';
+import AppointmentHistoryPage from '../appointmentHistory/Main';
 
 function HomeScreen({ navigation }) {
   const username = 'Juan';
@@ -19,7 +20,7 @@ function HomeScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Header title={`Bienvenido, ${username}!`} leftIcon="menu-outline" leftAction={toggleMenu} rightIcon="notifications-outline" />
+      <Header leftIcon="menu-outline" leftAction={toggleMenu} rightIcon="notifications-outline" />
       <View style={styles.content}>
         <Text style={styles.text}>¡pantalla principal!</Text>
         <Card title="Reservar">
@@ -118,7 +119,7 @@ const MainScreen = ({ navigation }) => {
       <Tab.Screen name="Citas" component={PendingAppointments} options={{ headerShown: false }}/>
       <Tab.Screen name="Nueva Cita" component={AddAppointment} options={{ headerShown: false }}/>
       <Tab.Screen name="Configuración" component={SettingsScreen} options={{ headerShown: false }}/>
-      <Tab.Screen name="Historial" component={History} options={{ headerShown: false }}/>
+      <Tab.Screen name="Historial" component={AppointmentHistoryPage} options={{ headerShown: false }}/>
     </Tab.Navigator>
   );
 };
