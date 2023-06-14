@@ -1,18 +1,20 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const Card = (props) => {
+  const { title, iconName, onPress } = props;
+
   return (
-    
-    <View style={styles.card}>
+    <TouchableOpacity style={styles.card} onPress={onPress}>
       <View style={styles.container}>
-        <Text style={styles.title}>{props.title}</Text>
+        <Icon name={iconName} size={32} color="#fff" />
       </View>
       <View style={styles.content}>
+        <Text style={styles.title}>{title}</Text>
         {props.children}
       </View>
-    </View>
-    
+    </TouchableOpacity>
   );
 };
 
@@ -32,7 +34,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   container: {
     backgroundColor: '#61282D',
@@ -40,18 +42,22 @@ const styles = StyleSheet.create({
     marginRight: 10,
     width: 92,
     height: 92,
-    justifyContent: 'center'
-  },
-  title: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 15,
-    alignContent: 'center',
-    textAlign: 'center'
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   content: {
-    flex: 1
-  }
+    flex: 1,
+    padding: 10,
+    justifyContent: 'center',
+  },
+  title: {
+    color: '#000',
+    fontWeight: 'bold',
+    fontSize: 1,
+    textAlign: 'center',
+    flexWrap: 'wrap',
+  },
+  
 });
 
 export default Card;

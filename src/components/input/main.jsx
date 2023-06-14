@@ -42,14 +42,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderColor: '#ccc',
-    borderRadius: 5,
+    borderRadius: 10,
     marginBottom: 16
   },
   input: {
     flex: 1,
     height: 48,
     paddingHorizontal: 5,
-    fontSize: 16
+    fontSize: 16,
+    paddingHorizontal: 10,
+    paddingVertical: 10,
   },
   toggleButton: {
     paddingHorizontal: 16,

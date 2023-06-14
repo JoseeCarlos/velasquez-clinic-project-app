@@ -5,16 +5,16 @@ import {
   Text,
   TouchableOpacity,
   Image,
+  ScrollView,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import * as ImagePicker from 'expo-image-picker';
+import * as ImagePicker from "expo-image-picker";
 import Input from "../input/main";
 
-
 function EditProfile({ navigation }) {
-  const [name, setName] = useState("");
+  const [name, setName] = useState("Juan Perez");
   const [bio, setBio] = useState("");
-  const [location, setLocation] = useState("");
+  const [location, setLocation] = useState("Cochabamba");
   const [image, setImage] = useState("");
 
   function handleSubmit() {
@@ -31,9 +31,8 @@ function EditProfile({ navigation }) {
 
     console.log(result);
     if (!result.cancelled) {
-        setImage(result.uri);
-        }
-        
+      setImage(result.uri);
+    }
   };
 
   return (
@@ -54,31 +53,35 @@ function EditProfile({ navigation }) {
             source={require("../../../assets/me.png")}
             resizeMode="cover"
           />
-          <TouchableOpacity style={styles.cameraIconContainer} onPress={pickImage} >
+          <TouchableOpacity
+            style={styles.cameraIconContainer}
+            onPress={pickImage}
+          >
             <Ionicons name="camera-reverse-outline" size={32} color="#F9A13C" />
           </TouchableOpacity>
         </View>
-        <Text style={styles.inputLabel}>Nombre</Text>
-        <Input
-            style={styles.input}
+      </View>
+      <View style={styles.formContainer}>
+        <ScrollView style={styles.formContent} >
+          <Text style={styles.inputLabel}>Nombre</Text>
+          <Input
             placeholder="Ingrese su nombre"
             value={name}
             onChangeText={setName}
-            />
-        <Text style={styles.inputLabel}>Apellido</Text>
-        <Input
-            style={styles.input}
+          />
+          <Text style={styles.inputLabel}>Apellido</Text>
+          <Input
             placeholder="Ingrese su apellido"
             value={name}
             onChangeText={setName}
-            />
-        <Text style={styles.inputLabel}>Ubicación</Text>
-        <Input
-            style={styles.input}
+          />
+          <Text style={styles.inputLabel}>Ubicación</Text>
+          <Input
             placeholder="Ingrese su ubicación"
             value={location}
             onChangeText={setLocation}
-            />
+          />
+        </ScrollView>
       </View>
     </View>
   );
@@ -90,15 +93,22 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   header: {
-    backgroundColor: "#F9A13C",
-    height: "12%",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    position: 'relative',
+    top: 0,
+    backgroundColor: '#F9A13C',
+    height: 100,
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     paddingHorizontal: 20,
+    padding: 20,
     paddingBottom: 10,
     borderBottomLeftRadius: 40,
     borderBottomRightRadius: 40,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+   
   },
   headerTitle: {
     color: "#fff",
@@ -111,8 +121,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   content: {
-    paddingHorizontal: 20,
-    paddingTop: 30,
+    paddingHorizontal: 30,
+    paddingTop: 40,
+    paddingBottom: 10,
   },
   profileImageContainer: {
     position: "relative",
@@ -144,14 +155,21 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-
     elevation: 5,
   },
+  formContainer: {
+    flex: 1,
+    marginBottom: 20,
+    paddingHorizontal: 20,
+  },
+  formContent: {
+    
+    
+  },
   inputLabel: {
-    color: "#aaa",
+    color: "#566264",
     fontSize: 16,
     marginBottom: 5,
-
   },
   input: {
     backgroundColor: "#F9F9F9",
@@ -171,3 +189,4 @@ const styles = StyleSheet.create({
 });
 
 export default EditProfile;
+

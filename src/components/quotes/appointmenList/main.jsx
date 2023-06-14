@@ -1,98 +1,120 @@
 import React from 'react';
-import { FlatList, View, Text, StyleSheet } from 'react-native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { View, Text, StyleSheet, Image, FlatList } from 'react-native';
 
-const AppointmentList = ({ appointments }) => {
-  const renderAppointment = ({ item }) => {
+const AppointmentScreen = () => {
+  const appointmentsData = [
+    {
+      id: '1',
+      doctor: {
+        name: 'Dr. Juan Pérez',
+        photo: 'https://firebasestorage.googleapis.com/v0/b/parcial-gps-pm2.appspot.com/o/imageLogo.png?alt=media&token=074b4e9d-93dd-4363-9c8b-54c380c1b41a',
+      },
+      date: '2023-06-15',
+      time: '10:00 AM',
+      status: 'pending',
+    },
+    {
+      id: '2',
+      doctor: {
+        name: 'Dr. María Gómez',
+        photo: 'https://firebasestorage.googleapis.com/v0/b/parcial-gps-pm2.appspot.com/o/imageLogo.png?alt=media&token=074b4e9d-93dd-4363-9c8b-54c380c1b41a',
+      },
+      date: '2023-06-16',
+      time: '02:30 PM',
+      status: 'pending',
+    },
+    // Agrega más citas según sea necesario
+  ];
+
+  const renderAppointmentItem = ({ item }) => {
     return (
-      <View style={styles.appointmentContainer}>
-        <View style={styles.appointmentInfo}>
-          <Text style={styles.appointmentName}>{item.name}</Text>
-          <View style={styles.appointmentDateTime}>
-            <FontAwesome name="calendar" style={styles.appointmentIcon} />
-            <Text style={styles.appointmentDate}>{item.date}</Text>
-          </View>
-          <View style={styles.appointmentDateTime}>
-            <FontAwesome name="clock-o" style={styles.appointmentIcon} />
-            <Text style={styles.appointmentTime}>{item.time}</Text>
+      <View style={styles.card}>
+        <View style={styles.header}>
+          <Image source={{ uri: item.doctor.photo }} style={styles.doctorPhoto} />
+          <View style={styles.headerText}>
+            <Text style={styles.doctorName}>{item.doctor.name}</Text>
+            <Text style={styles.status}>Pendiente</Text>
           </View>
         </View>
-        <View style={styles.appointmentStatus}>
-          <Text style={styles.appointmentStatusLabel}>Pendiente</Text>
+        <View style={styles.content}>
+          <Text style={styles.date}>{item.date}</Text>
+          <Text style={styles.time}>{item.time}</Text>
         </View>
       </View>
     );
   };
 
   return (
-    <FlatList
-      data={appointments}
-      renderItem={renderAppointment}
-      keyExtractor={(item) => item.id}
-      contentContainerStyle={styles.listContainer}
-    />
+    <View style={styles.container}>
+      {appointmentsData.length > 0 ? (
+        <FlatList
+          data={appointmentsData}
+          renderItem={renderAppointmentItem}
+          keyExtractor={(item) => item.id}
+        />
+      ) : (
+        <Text>No hay citas pendientes</Text>
+      )}
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  listContainer: {
-    paddingHorizontal: 20,
-    paddingVertical: 10
-  },
-  appointmentContainer: {
-    backgroundColor: '#fff',
-    borderRadius: 10,
+  container: {
+    flex: 1,
     padding: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    shadowColor: '#000',
+  },
+  card: {
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    marginBottom: 10,
+    elevation: 5,
+    marginHorizontal: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    marginVertical:10,
     shadowOffset: {
       width: 0,
-      height: 2
+      height: 2,
     },
-    shadowOpacity: 0.2,
-    shadowRadius: 3.84,
-    elevation: 5,
-    marginBottom: 20
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
   },
-  appointmentInfo: {
-    flex: 1,
-    marginRight: 20
-  },
-  appointmentName: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 5
-  },
-  appointmentDateTime: {
+  header: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 5
+    marginBottom: 10,
   },
-  appointmentIcon: {
-    fontSize: 20,
+  doctorPhoto: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
     marginRight: 10,
-    color: '#61282D'
   },
-  appointmentDate: {
-    fontSize: 16
+  headerText: {
+    flex: 1,
   },
-  appointmentTime: {
+  doctorName: {
     fontSize: 16,
-    marginLeft: 5
+    fontWeight: 'bold',
   },
-  appointmentStatus: {
-    backgroundColor: '#6BBE9C',
-    borderRadius: 20,
-    paddingHorizontal: 20,
-    paddingVertical: 5
+  status: {
+    fontSize: 14,
+    color: 'green',
+    fontWeight: 'bold',
   },
-  appointmentStatusLabel: {
-    color: '#fff',
+  content: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  date: {
     fontSize: 16,
-    fontWeight: 'bold'
-  }
+    fontWeight: 'bold',
+  },
+  time: {
+    fontSize: 14,
+    color: '#666',
+  },
 });
 
-export default AppointmentList;
+export default AppointmentScreen;

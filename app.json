@@ -21,7 +21,11 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.josecarlos1221.velasquezclinicprojectapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -33,6 +37,11 @@
           "photosPermission": "The app accesses your photos to let you share them with your friends."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "aacd78bc-efb4-46af-ba5c-9ee66c1e9fc4"
+      }
+    }
   }
 }

@@ -86,7 +86,7 @@ const Login = () => {
           onPress={handleSignUpPress}
         >
           <Text style={styles.bottomLinksTextRegister}>¿No tienes cuenta? <Text style={styles.TextButtonRegister} >Regístrate</Text> </Text>
-      </TouchableOpacity>
+      </TouchableOpacity>   
       
       <ResetPasswordModal visible={resetPasswordModalVisible} onClose={() => setResetPasswordModalVisible(false)}/>
     </View>

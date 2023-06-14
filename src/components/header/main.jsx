@@ -1,8 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { Badge } from 'react-native-elements';
 
-function Header({ navigation, title, leftAction }) {
+function Header({ navigation, title, leftAction, notificationCount }) {
   return (
     <View style={styles.header}>
       <TouchableOpacity onPress={leftAction}>
@@ -18,20 +19,27 @@ function Header({ navigation, title, leftAction }) {
         <Text style={styles.title}>{title}</Text>
       ) : (
         <View style={styles.logoContainer}>
-          <Image
-          source={require('../../../assets/logo-white-im.png')}
-          style={styles.logoIm}
-          resizeMode="contain"
-        />
         <Image
           source={require('../../../assets/logo-white-le.png')}
           style={styles.logo}
           resizeMode="contain"
         />
+        <Image
+          source={require('../../../assets/logo-white-im.png')}
+          style={styles.logoIm}
+          resizeMode="contain"
+        />
         </View>
       )}
-      <TouchableOpacity>
-        <Ionicons name="notifications-outline" size={32} color="#fff" />
+      <TouchableOpacity style={styles.notificationsContainer} onPress={()=>{
+        navigation.navigate('Notification');
+      }} >
+        <Ionicons name="notifications" size={28} color="#fff" />
+        {notificationCount > 0 && (
+          <View style={styles.badgeContainer}>
+            <Text style={styles.badgeText}>{notificationCount}</Text>
+          </View>
+        )}
       </TouchableOpacity>
     </View>
   );
@@ -40,10 +48,11 @@ function Header({ navigation, title, leftAction }) {
 const styles = StyleSheet.create({
   header: {
     backgroundColor: '#F9A13C',
-    height: '15%',
+    height: 100,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    paddingTop: 25,
     paddingHorizontal: 20,
     paddingBottom: 10,
     borderBottomLeftRadius: 50,
@@ -55,8 +64,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   menuIconContainer: {
-    width: 30,
-    height: 30,
+    width: 32,
+    height: 32,
     borderRadius: 20,
     overflow: 'hidden',
     justifyContent: 'center',
@@ -80,6 +89,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 150,
     height: '100%',
+  },
+  badgeContainer: {
+    backgroundColor: '#ff0000',
+    position: 'absolute',
+    borderRadius: 10,
+    paddingHorizontal: 6,
+    top: -5,
+    right: -5,
+  },
+  badgeText: {
+    fontSize: 12,
+    color: '#fff'
   },
 });
 

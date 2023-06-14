@@ -7,7 +7,9 @@ import { Ionicons } from '@expo/vector-icons';
 import Card from '../homeCard/HomeCard';
 import PendingAppointments from '../quotes/Main';
 import AddAppointment from '../addAppointment/Main';
-import AppointmentHistoryPage from '../appointmentHistory/Main';
+import AppointmentHistoryPage from '../appointmentHistory/Main'
+import Icon from 'react-native-vector-icons/MaterialIcons';
+;
 
 function HomeScreen({ navigation }) {
   const username = 'Juan';
@@ -20,55 +22,33 @@ function HomeScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Header leftIcon="menu-outline" leftAction={toggleMenu} rightIcon="notifications-outline" />
+      <Header leftIcon="menu-outline" leftAction={toggleMenu} rightIcon="notifications-outline" navigation={navigation} notificationCount={'3'} />
       <View style={styles.content}>
-        <Text style={styles.text}>¡pantalla principal!</Text>
-        <Card title="Reservar">
+        <Text style={styles.text}>Bienvenido!</Text>
+        <Card iconName="event">
           <Text>Reserver una cita!</Text>
         </Card>
-        <Card title="Citas">
+        <Card iconName="history">
           <Text>Historial de citas!</Text>
         </Card>
 
-        <Card title="Pagos">
-          <Text>Configuración de la cuenta!</Text>
+        <Card iconName="credit-card" onPress={()=>{
+          navigation.navigate('PaymentHistory')
+        }} >
+          <Text>Pagos o Cuotas</Text>
+        </Card>
+        <Card iconName="local-hospital" onPress={()=>{
+          navigation.navigate('Treatments')
+        }} >
+          <Text>Tratamientos</Text>
+        </Card>
+        <Card iconName="medical-services" onPress={()=>{
+          navigation.navigate('News')
+        }} >
+          <Text>Clinica</Text>
         </Card>
       </View>
       <Menu isOpen={isMenuOpen} navigation={navigation} toggleMenu={toggleMenu} />
-    </View>
-  );
-}
-
-const QuotesScreen = () => {
-  return (
-    <View style={styles.container}>
-      <Header title="Citas" />
-      <View style={styles.content}>
-        <Text style={styles.text}>¡Pantalla de Citas!</Text>
-      </View>
-    </View>
-  );
-};
-
-// const AddAppointment  = () => {
-//   return (
-//     <View style={styles.container}>
-//       <Header title="Nueva cita" />
-//       <View style={styles.content}>
-//         <Text style={styles.text}>¡Nueva Cita!</Text>
-//       </View>
-//     </View>
-//   );
-// }
-
-const History = () => {
-  return (
-    <View style={styles.container}>
-      <Header title="Configuración" />
-      <View style={styles.content}>
-        <Text style={styles.text}>¡Historial!</Text>
-      </View>
-
     </View>
   );
 }
@@ -113,6 +93,17 @@ const MainScreen = ({ navigation }) => {
       tabBarOptions={{
         activeTintColor: '#F9A13C',
         inactiveTintColor: '#61282D',
+        style: {
+          backgroundColor: '#FFF',
+          borderTopWidth: 1,
+          borderTopColor: '#DDD',
+          height: 60,
+        },
+        labelStyle: {
+          fontSize: 12,
+          
+          marginBottom: 4,
+        },
       }}
     >
       <Tab.Screen name="Inicio" component={HomeScreen} options={{ headerShown: false }}/>

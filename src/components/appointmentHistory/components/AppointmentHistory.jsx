@@ -1,20 +1,43 @@
 import React from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
+import { View, Text, StyleSheet, Image, FlatList } from 'react-native';
 
-const AppointmentHistoryScreen = ({ appointments }) => {
-  const renderAppointment = ({ item }) => {
+const AppointmentHistoryScreen = () => {
+  const historyData = [
+    {
+      id: '1',
+      doctor: {
+        name: 'Dr. Juan Pérez',
+        photo: 'https://firebasestorage.googleapis.com/v0/b/parcial-gps-pm2.appspot.com/o/depositphotos_42930187-stock-photo-smiling-male-doctor-with-arms.jpg?alt=media&token=44a485b9-df4e-4806-81b8-9c9ac93721f3',
+      },
+      date: '2023-06-15',
+      time: '10:00 AM',
+      status: 'attended',
+    },
+    {
+      id: '2',
+      doctor: {
+        name: 'Dr. María Gómez',
+        photo: 'https://firebasestorage.googleapis.com/v0/b/parcial-gps-pm2.appspot.com/o/imageLogo.png?alt=media&token=074b4e9d-93dd-4363-9c8b-54c380c1b41a',
+      },
+      date: '2023-06-16',
+      time: '02:30 PM',
+      status: 'missed',
+    },
+    // Agrega más citas según sea necesario
+  ];
+
+  const renderHistoryItem = ({ item }) => {
+    const statusColor = item.status === 'attended' ? 'green' : 'red';
     return (
-      <View style={styles.appointmentContainer}>
-        <View style={styles.appointmentInfo}>
-          <Text style={styles.appointmentName}>{item.name}</Text>
-          <View style={styles.appointmentDateTime}>
-            <Text style={styles.appointmentDate}>{item.date}</Text>
-            <Text style={styles.appointmentTime}>{item.time}</Text>
-          </View>
-        </View>
-        <View style={styles.appointmentStatus}>
-          <FontAwesome name="check-circle" size={24} color="#6BBE9C" />
+      <View style={styles.card}>
+        <Image source={{ uri: item.doctor.photo }} style={styles.doctorPhoto} />
+        <View style={styles.detailsContainer}>
+          <Text style={styles.doctorName}>{item.doctor.name}</Text>
+          <Text style={styles.date}>{item.date}</Text>
+          <Text style={styles.time}>{item.time}</Text>
+          <Text style={[styles.status, { color: statusColor }]}>
+            {item.status === 'attended' ? 'Atendido' : 'No atendido'}
+          </Text>
         </View>
       </View>
     );
@@ -22,13 +45,15 @@ const AppointmentHistoryScreen = ({ appointments }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Historial de Citas</Text>
-      <FlatList
-        data={appointments}
-        renderItem={renderAppointment}
-        keyExtractor={(item) => item.id}
-        contentContainerStyle={styles.listContainer}
-      />
+      {historyData.length > 0 ? (
+        <FlatList
+          data={historyData}
+          renderItem={renderHistoryItem}
+          keyExtractor={(item) => item.id}
+        />
+      ) : (
+        <Text>No hay citas en el historial</Text>
+      )}
     </View>
   );
 };
@@ -37,54 +62,55 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
+    
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginVertical: 20,
-  },
-  listContainer: {
-    paddingBottom: 20,
-  },
-  appointmentContainer: {
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    padding: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+  card: {
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 1,
+      height: 2,
     },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.41,
-    elevation: 2,
+    padding: 5,
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+    borderRadius: 4,
+    backgroundColor: '#fff',
+    marginVertical: 10,
+    marginHorizontal: 20,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
     marginBottom: 20,
+
   },
-  appointmentInfo: {
+  doctorPhoto: {
+    width: 110,
+    height: 110,
+    borderRadius: 4,
+    marginRight: 16,
+  },
+  detailsContainer: {
     flex: 1,
-    marginRight: 20,
   },
-  appointmentName: {
+  doctorName: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 5,
+    marginBottom: 8,
   },
-  appointmentDateTime: {
-    flexDirection: 'row',
-  },
-  appointmentDate: {
+  date: {
     fontSize: 16,
-    marginRight: 10,
+    marginBottom: 4,
   },
-  appointmentTime: {
+  time: {
     fontSize: 16,
+    marginBottom: 4,
   },
-  appointmentStatus: {},
+  status: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'green',
+  },
 });
 
 export default AppointmentHistoryScreen;
