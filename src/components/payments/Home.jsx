@@ -9,7 +9,8 @@ const PaymentHistoryScreen = ({navigation}) => {
         // Establecer el idioma español al cargar el componente
         moment.locale('es');
       }, []);
-  const [selectedFilter, setSelectedFilter] = useState(null);
+      const [selectedFilter, setSelectedFilter] = useState(null);
+      const [filteredPayments, setFilteredPayments] = useState([]);
 
   const paymentHistoryData = [
     {
@@ -21,7 +22,6 @@ const PaymentHistoryScreen = ({navigation}) => {
         description: 'Remoción de placa y sarro, pulido dental.',
         duration: '1 hora',
         dentist: 'Dr. Juan Pérez',
-        
       },
       status: 'Paid',
     },
@@ -34,17 +34,80 @@ const PaymentHistoryScreen = ({navigation}) => {
         description: 'Extracción quirúrgica de las muelas del juicio impactadas.',
         duration: '2 horas',
         dentist: 'Dra. María Gómez',
-        
       },
       status: 'Pending',
+    },
+    {
+      id: 3,
+      date: '2023-06-10',
+      amount: 180,
+      treatment: {
+        title: 'Tratamiento de Conducto',
+        description: 'Remoción de pulpa infectada y sellado del conducto radicular.',
+        duration: '1.5 horas',
+        dentist: 'Dr. Luis Ramírez',
+      },
+      status: 'Paid',
+    },
+    {
+      id: 4,
+      date: '2023-06-15',
+      amount: 200,
+      treatment: {
+        title: 'Blanqueamiento Dental',
+        description: 'Procedimiento para aclarar el color de los dientes.',
+        duration: '1 hora',
+        dentist: 'Dra. Ana López',
+      },
+      status: 'Pending',
+    },
+    {
+      id: 5,
+      date: '2023-06-20',
+      amount: 300,
+      treatment: {
+        title: 'Implante Dental',
+        description: 'Colocación de un implante dental en el hueso maxilar.',
+        duration: '2 horas',
+        dentist: 'Dr. Carlos Martínez',
+      },
+      status: 'Paid',
     },
     // Agrega más objetos de datos con diferentes tratamientos
   ];
 
+  const filterPayments = () => {
+    if (selectedFilter === null) {
+      // No se aplica ningún filtro, mostrar todos los pagos
+      setFilteredPayments(paymentHistoryData);
+    } else if (selectedFilter === 'today') {
+      // Filtrar los pagos para mostrar solo los pagos de hoy
+      const today = moment().format('YYYY-MM-DD');
+      const filtered = paymentHistoryData.filter((payment) => payment.date === today);
+      setFilteredPayments(filtered);
+    } else if (selectedFilter === 'week') {
+      // Filtrar los pagos para mostrar solo los pagos de la semana actual
+      const startOfWeek = moment().startOf('week').format('YYYY-MM-DD');
+      const endOfWeek = moment().endOf('week').format('YYYY-MM-DD');
+      const filtered = paymentHistoryData.filter(
+        (payment) => payment.date >= startOfWeek && payment.date <= endOfWeek
+      );
+      setFilteredPayments(filtered);
+    } else if (selectedFilter === 'month') {
+      // Filtrar los pagos para mostrar solo los pagos del mes actual
+      const startOfMonth = moment().startOf('month').format('YYYY-MM-DD');
+      const endOfMonth = moment().endOf('month').format('YYYY-MM-DD');
+      const filtered = paymentHistoryData.filter(
+        (payment) => payment.date >= startOfMonth && payment.date <= endOfMonth
+      );
+      setFilteredPayments(filtered);
+    }
+  };
+
   
 
   const renderPaymentItem = ({ item }) => {
-    const cardBorderColor = item.status === 'Paid' ? '#000' : '#000';
+    const cardBorderColor = item.status === 'Paid' ? '#fff' : '#fff';
     const formattedDate = moment(item.date).format('LL');
 
     return (
@@ -193,7 +256,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 5,
+    elevation: 6,
     marginHorizontal: 10,
     marginVertical: 10,
     

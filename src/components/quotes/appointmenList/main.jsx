@@ -1,34 +1,89 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, FlatList } from 'react-native';
+import { useEffect } from 'react';
+import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity } from 'react-native';
+import moment from 'moment';
+import 'moment/locale/es';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const AppointmentScreen = () => {
+const AppointmentScreen = ({navigation }) => {
+  useEffect(() => {
+    // Establecer el idioma español al cargar el componente
+    moment.locale('es');
+  }, []);
   const appointmentsData = [
     {
       id: '1',
       doctor: {
         name: 'Dr. Juan Pérez',
-        photo: 'https://firebasestorage.googleapis.com/v0/b/parcial-gps-pm2.appspot.com/o/imageLogo.png?alt=media&token=074b4e9d-93dd-4363-9c8b-54c380c1b41a',
+        photo: 'https://source.unsplash.com/random/800x600/?cat',
       },
       date: '2023-06-15',
       time: '10:00 AM',
-      status: 'pending',
+      status: 'attended',
     },
     {
       id: '2',
       doctor: {
         name: 'Dr. María Gómez',
-        photo: 'https://firebasestorage.googleapis.com/v0/b/parcial-gps-pm2.appspot.com/o/imageLogo.png?alt=media&token=074b4e9d-93dd-4363-9c8b-54c380c1b41a',
+        photo: 'https://source.unsplash.com/random/800x600/?flappy',
       },
       date: '2023-06-16',
       time: '02:30 PM',
-      status: 'pending',
+      status: 'missed',
+    },
+    {
+      id: '3',
+      doctor: {
+        name: 'Dr. Juan Pérez',
+        photo: 'https://source.unsplash.com/random/800x600/?user',
+      },
+      date: '2023-06-15',
+      time: '10:00 AM',
+      status: 'suspended',
+    },
+    {
+      id: '4',
+      doctor: {
+        name: 'Dr. María Gómez',
+        photo: 'https://source.unsplash.com/random/800x600/?person',
+      },
+      date: '2023-06-16',
+      time: '02:30 PM',
+      status: 'missed',
+    },
+    {
+      id: '5',
+      doctor: {
+        name: 'Dr. Juan Pérez',
+        photo: 'https://source.unsplash.com/random/800x600/?city',
+      },
+      date: '2023-06-15',
+      time: '10:00 AM',
+      status: 'attended',
+    },
+    {
+      id: '6',
+      doctor: {
+        name: 'Dr. María Gómez',
+        photo: 'https://source.unsplash.com/random/800x600/?rose',
+      },
+      date: '2023-06-16',
+      time: '02:30 PM',
+      status: 'suspended',
     },
     // Agrega más citas según sea necesario
   ];
 
+  const handleCardPress = (item) => {
+    navigation.navigate('AppointmentDetails')
+
+  };
+
   const renderAppointmentItem = ({ item }) => {
+    const formattedDate = moment(item.date).format('LL');
     return (
-      <View style={styles.card}>
+      <TouchableOpacity onPress={()=>{}} >
+        <View style={styles.card}>
         <View style={styles.header}>
           <Image source={{ uri: item.doctor.photo }} style={styles.doctorPhoto} />
           <View style={styles.headerText}>
@@ -37,10 +92,23 @@ const AppointmentScreen = () => {
           </View>
         </View>
         <View style={styles.content}>
-          <Text style={styles.date}>{item.date}</Text>
-          <Text style={styles.time}>{item.time}</Text>
+          
+          <Text style={styles.date}> <Icon name='event'  /> {formattedDate}</Text>
+          <Text style={styles.date}> <Icon name='access-time' /> {item.time}</Text>
+        </View>
+        <View style={styles.contentButton}>
+          
+        <TouchableOpacity style={[styles.button, styles.buttonCancel]}  >
+          <Text style={styles.textButtonCancel}>Cancelar</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={[ styles.button,styles.buttonReschedule]} onPress={handleCardPress(item)}  >
+          <Text style={styles.textButtonReschedule}>Reprogramar</Text>
+        </TouchableOpacity>
         </View>
       </View>
+
+      </TouchableOpacity>
+      
     );
   };
 
@@ -62,14 +130,13 @@ const AppointmentScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
   },
   card: {
     backgroundColor: '#fff',
     borderRadius: 8,
     marginBottom: 10,
     elevation: 5,
-    marginHorizontal: 10,
+    marginHorizontal: 15,
     paddingHorizontal: 20,
     paddingVertical: 10,
     marginVertical:10,
@@ -106,14 +173,52 @@ const styles = StyleSheet.create({
   content: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    padding: 20,
+    backgroundColor: '#f7f7fb',
+    borderRadius: 10,
   },
   date: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: 'bold',
   },
   time: {
     fontSize: 14,
     color: '#666',
+  },
+  contentButton: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: 10,
+  },
+  button: {
+    flex: 1,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    marginHorizontal: 5,
+    borderRadius: 25,
+    width: '100%',
+    alignItems: 'center',
+    
+
+  },
+  buttonCancel: {
+    borderWidth: 1,
+    borderColor: '#61282D',
+    
+  },
+  buttonReschedule: {
+    backgroundColor: '#F9A13C',
+    
+  },
+  textButtonCancel: {
+    color: '#61282D',
+    fontWeight: 'bold',
+    fontSize: 15,
+  },
+  textButtonReschedule: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 15,
   },
 });
 

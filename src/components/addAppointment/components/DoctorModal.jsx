@@ -12,22 +12,42 @@ import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import { ScrollView } from "react-native-gesture-handler";
 
-const DoctorModal = ({ visible, onClose }) => {
+const DoctorModal = ({ visible, onClose, setDoctor }) => {
   const doctors = [
     {
-      name: "Dr. Juan Pérez",
-      specialty: "Cardiología",
-      image: "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80",
+      name: "Dr. Alejandro Gómez",
+      specialty: "Neurología",
+      image: "https://source.unsplash.com/random/800x600/?person",
     },
     {
-      name: "Dra. María González",
-      specialty: "Pediatría",
-      image: "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80",
+      name: "Dra. Gabriela Hernández",
+      specialty: "Ginecología",
+      image: "https://source.unsplash.com/random/800x600/?cat",
     },
     {
-      name: "Dr. José Ramírez",
-      specialty: "Dermatología",
-      image: "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80",
+      name: "Dr. Antonio Silva",
+      specialty: "Oftalmología",
+      image: "https://source.unsplash.com/random/800x600/?dog",
+    },
+    {
+      name: "Dra. Ana López",
+      specialty: "Oncología",
+      image: "https://source.unsplash.com/random/800x600/?cat",
+    },
+    {
+      name: "Dr. Manuel Torres",
+      specialty: "Cirugía General",
+      image: "https://source.unsplash.com/random/800x600/?person",
+    },
+    {
+      name: "Dra. Lucía Morales",
+      specialty: "Psiquiatría",
+      image: "https://source.unsplash.com/random/800x600/?dog",
+    },
+    {
+      name: "Dr. Ricardo Mendoza",
+      specialty: "Medicina Interna",
+      image: "https://source.unsplash.com/random/800x600/?cat",
     },
   ];
   const [searchItem, setSearchItem] = useState("");
@@ -76,7 +96,10 @@ const DoctorModal = ({ visible, onClose }) => {
               specialty={doctor.specialty}
               image={doctor.image}
               rating={4.5}
-              onPress={() => alert("Doctor seleccionado")}
+              onPress={() => {
+                setDoctor(doctor);
+                handleCloseModal();
+              }}
             />
           ))
         ) : (

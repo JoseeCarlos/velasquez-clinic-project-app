@@ -25,10 +25,10 @@ const appointments = [
   },
 ];
 
-const AppointmentHistoryPage = () => {
+const AppointmentHistoryPage = ({navigation}) => {
   return (
     <View style={styles.container}>
-      <Header title="Hitorial de atenciones" />
+      <Header title="Hitorial de atenciones" navigation={navigation} notificationCount={'3'} />
       <View style={styles.content}>
         <AppointmentHistoryScreen appointments={appointments} />
       </View>

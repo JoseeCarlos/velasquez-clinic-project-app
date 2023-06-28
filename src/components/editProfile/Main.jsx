@@ -10,12 +10,15 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import Input from "../input/main";
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 function EditProfile({ navigation }) {
   const [name, setName] = useState("Juan Perez");
   const [bio, setBio] = useState("");
   const [location, setLocation] = useState("Cochabamba");
   const [image, setImage] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   function handleSubmit() {
     // handle submit logic here
@@ -35,6 +38,10 @@ function EditProfile({ navigation }) {
     }
   };
 
+  const handlePasswordChange = () => {
+    // handle password change logic here
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -50,7 +57,7 @@ function EditProfile({ navigation }) {
         <View style={styles.profileImageContainer}>
           <Image
             style={styles.profileImage}
-            source={require("../../../assets/me.png")}
+            source={{uri: 'https://source.unsplash.com/random/800x600/?user'}}
             resizeMode="cover"
           />
           <TouchableOpacity
@@ -62,7 +69,7 @@ function EditProfile({ navigation }) {
         </View>
       </View>
       <View style={styles.formContainer}>
-        <ScrollView style={styles.formContent} >
+        <ScrollView style={styles.formContent}>
           <Text style={styles.inputLabel}>Nombre</Text>
           <Input
             placeholder="Ingrese su nombre"
@@ -81,6 +88,26 @@ function EditProfile({ navigation }) {
             value={location}
             onChangeText={setLocation}
           />
+          <Text style={styles.inputLabel}>Contraseña</Text>
+          <Input
+            placeholder="Ingrese su contraseña"
+            secureTextEntry
+            value={password}
+            onChangeText={setPassword}
+          />
+          <Text style={styles.inputLabel}>Repita su contraseña</Text>
+          <Input
+            placeholder="Repita su contraseña"
+            secureTextEntry
+            value={confirmPassword}
+            onChangeText={setConfirmPassword}
+          />
+          <TouchableOpacity
+            style={styles.buttonContainer}
+            onPress={handlePasswordChange}
+          >
+            <Text style={styles.buttonText}>Cambiar contraseña</Text>
+          </TouchableOpacity>
         </ScrollView>
       </View>
     </View>
@@ -91,8 +118,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-  },
-  header: {
+    },
+    header: {
     position: 'relative',
     top: 0,
     backgroundColor: '#F9A13C',
@@ -108,37 +135,37 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 40,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
-   
-  },
-  headerTitle: {
+    
+    },
+    headerTitle: {
     color: "#fff",
     fontSize: 20,
     marginLeft: -90,
-  },
-  headerButton: {
+    },
+    headerButton: {
     color: "#fff",
     fontSize: 14,
     fontWeight: "bold",
-  },
-  content: {
+    },
+    content: {
     paddingHorizontal: 30,
     paddingTop: 40,
     paddingBottom: 10,
-  },
-  profileImageContainer: {
+    },
+    profileImageContainer: {
     position: "relative",
     alignSelf: "center",
     marginTop: -60,
     marginBottom: 20,
-  },
-  profileImage: {
+    },
+    profileImage: {
     width: 120,
     height: 120,
     borderRadius: 60,
     borderWidth: 4,
     borderColor: "#fff",
-  },
-  cameraIconContainer: {
+    },
+    cameraIconContainer: {
     position: "absolute",
     bottom: 0,
     right: 0,
@@ -150,28 +177,26 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     shadowColor: "#000",
     shadowOffset: {
-      width: 0,
-      height: 2,
+    width: 0,
+    height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-  },
-  formContainer: {
+    },
+    formContainer: {
     flex: 1,
     marginBottom: 20,
     paddingHorizontal: 20,
-  },
-  formContent: {
-    
-    
-  },
-  inputLabel: {
+    },
+    formContent: {
+    },
+    inputLabel: {
     color: "#566264",
     fontSize: 16,
     marginBottom: 5,
-  },
-  input: {
+    },
+    input: {
     backgroundColor: "#F9F9F9",
     borderWidth: 1,
     borderColor: "#A7A7A7",
@@ -181,12 +206,24 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontSize: 16,
     color: "#000",
-  },
-  bioInput: {
+    },
+    bioInput: {
     height: 80,
     textAlignVertical: "top",
-  },
-});
-
-export default EditProfile;
-
+    },
+    buttonContainer: {
+    backgroundColor: "#F9A13C",
+    borderRadius: 10,
+    paddingVertical: 12,
+    marginTop: 20,
+    },
+    buttonText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#fff",
+    textAlign: "center",
+    },
+    });
+    
+    export default EditProfile;
+ 

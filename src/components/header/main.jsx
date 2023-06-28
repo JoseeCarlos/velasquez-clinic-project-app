@@ -9,7 +9,7 @@ function Header({ navigation, title, leftAction, notificationCount }) {
       <TouchableOpacity onPress={leftAction}>
       <View style={styles.menuIconContainer}>
           <Image
-            source={require('../../../assets/me.png')}
+            source={{uri: 'https://source.unsplash.com/random/800x600/?user'}}
             style={styles.menuIcon}
             resizeMode="cover"
           />
@@ -20,12 +20,12 @@ function Header({ navigation, title, leftAction, notificationCount }) {
       ) : (
         <View style={styles.logoContainer}>
         <Image
-          source={require('../../../assets/logo-white-le.png')}
+          source={require('../../../assets/icon-n2.png')}
           style={styles.logo}
           resizeMode="contain"
         />
         <Image
-          source={require('../../../assets/logo-white-im.png')}
+          source={require('../../../assets/icon-n.png')}
           style={styles.logoIm}
           resizeMode="contain"
         />
@@ -48,7 +48,7 @@ function Header({ navigation, title, leftAction, notificationCount }) {
 const styles = StyleSheet.create({
   header: {
     backgroundColor: '#F9A13C',
-    height: 100,
+    height: 80,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',

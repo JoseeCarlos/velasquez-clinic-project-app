@@ -1,125 +1,260 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
+import { useState } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  Modal,
+  ScrollView,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
+
+
 function Menu({ isOpen, navigation, toggleMenu }) {
+  const [cardColor, setCardColor] = useState('#fff');
+  const userData = {
+    name: "Michael Carballo",
+    email: "micaela@gmail.com",
+    photo:
+      "https://source.unsplash.com/random/800x600/?user",
+  };
+  const handlePress = () => {
+    onPress();
+    setCardColor('#f2f2f2');
+  };
+
   return (
-    <>
-      {isOpen && <View style={styles.overlay} />}
-      <View style={[styles.sideMenu, isOpen && styles.open]}>
-        <TouchableOpacity onPress={toggleMenu}>
-          <Ionicons
-            name="close-outline"
-            size={32}
-            color="#1DA1F2"
-            style={styles.closeIcon}
-          />
-        </TouchableOpacity>
-        <View style={styles.header}>
-          <Image
-            style={styles.profileImage}
-            source={require("../../../assets/me.png")}
-            resizeMode="cover"
-          />
-          <View style={styles.userInfo}>
-            <Text style={styles.profileName}>Juan Perez</Text>
-            <Text style={styles.username}>juanperez</Text>
-          </View>
+    <Modal
+      visible={isOpen}
+      animationType="slide"
+      transparent={true}
+      onRequestClose={toggleMenu}
+    >
+      <View style={styles.modalContainer}>
+        
+        <View style={styles.modalContent}>
+          <TouchableOpacity onPress={toggleMenu} style={styles.closeButton}>
+            <Ionicons name="close" size={30} color="#333" />
+          </TouchableOpacity>
+          <ScrollView>
+            <TouchableOpacity style={[styles.card, {backgroundColor: cardColor}]} onPress={()=>handlePress} >
+              
+           
+              <Image
+                source={{ uri: userData.photo }}
+                style={styles.userPhoto}
+              />
+              <View style={styles.userInfo}>
+                <Text style={styles.userName}>{userData.name}</Text>
+                <Text style={styles.userEmail}>{userData.email}</Text>
+                <TouchableOpacity style={styles.buttonInfo} onPress={() => {
+                  navigation.navigate("EditProfile");
+                  toggleMenu();
+                }}>
+                  <Text style={styles.buttonText}>Editar Perfil</Text>
+                </TouchableOpacity>
+              </View>
+            </TouchableOpacity>
+            <View style={styles.cardMenu}>
+              <Text style={styles.title}>Menú</Text>
+              <View style={styles.menuContainer}>
+                <OptionItem
+                  icon="ios-home"
+                  label="Inicio"
+                  actionIcon="ios-arrow-forward"
+                />
+                <OptionItem
+                  icon="ios-settings"
+                  label="Configuración"
+                  actionIcon="ios-arrow-forward"
+                />
+               
+                <OptionItem
+                  icon="ios-calendar"
+                  label="Calendario"
+                  actionIcon="ios-arrow-forward"
+                />
+                <OptionItem
+                  icon="ios-star"
+                  label="Favoritos"
+                  actionIcon="ios-arrow-forward"
+                />
+                <OptionItem
+                  icon="ios-person"
+                  label="Quienes Somos"
+                  actionIcon="ios-arrow-forward"
+                  onPress={()=>{
+                    toggleMenu();
+                    navigation.navigate('About');
+                  }}
+                  
+                />
+              </View>
+            </View>
+            <View style={styles.footerModal}>
+              <Text style={styles.titleFooter}>
+                Centro de Especialidades Odontologicas Velasquez
+              </Text>
+
+              <Text style={styles.titleFooter}>Version 1.0.1</Text>
+              <Text style={styles.titleFooter}>@ 2023 Velasquez</Text>
+              <Text style={styles.titleFooterRed}>
+                Politicas de privacidad - Terminos de Uso
+              </Text>
+            </View>
+          </ScrollView>
         </View>
-        <TouchableOpacity onPress={() => navigation.navigate("EditProfile")}>
-          <View style={styles.menuItemContainer}>
-            <Ionicons
-              name="person-circle-outline"
-              size={24}
-              color="#1DA1F2"
-              style={styles.menuItemIcon}
-            />
-            <Text style={styles.menuItem}>Perfil</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate("Lists")}>
-          <Text style={styles.menuItem}>Listas</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate("Topics")}>
-          <Text style={styles.menuItem}>Temas</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate("Settings")}>
-          <Text style={styles.menuItem}>Configuración y privacidad</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate("Help")}>
-          <Text style={styles.menuItem}>Centro de ayuda</Text>
-        </TouchableOpacity>
       </View>
-    </>
+    </Modal>
   );
 }
 
+const OptionItem = ({ icon, label, actionIcon, onPress }) => {
+  return (
+    <TouchableOpacity onPress={onPress} >
+      <View style={styles.optionItem}>
+        <View style={styles.iconContainer}>
+          <Ionicons name={icon} size={24} color="#333" />
+        </View>
+        <Text style={styles.optionLabel}>{label}</Text>
+        <View style={styles.actionIconContainer}>
+          <Ionicons name={actionIcon} size={20} color="#888" />
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
+};
+
 const styles = StyleSheet.create({
-  overlay: {
-    position: "absolute",
-    left: 0,
-    top: 0,
-    bottom: 0,
-    right: 0,
-    backgroundColor: "#000",
-    opacity: 0.5,
+  modalContainer: {
+    flex: 1,
+    justifyContent: "flex-end",
+    backgroundColor: "#f2f2f2",
   },
-  sideMenu: {
+  modalContent: {
+    width: "100%",
+    height: "100%",
+    backgroundColor: "#f2f2f2",
+  },
+  closeButton: {
     position: "absolute",
-    left: 0,
-    top: 0,
-    bottom: 0,
-    width: "90%",
-    backgroundColor: "#fff",
-    paddingVertical: 30,
-    paddingHorizontal: 20,
+    top: 15,
+    left: 15,
     zIndex: 1,
-    transform: [{ translateX: -400 }],
   },
-  open: {
-    transform: [{ translateX: 0 }],
+  card: {
+    backgroundColor: "#fff",
+    borderRadius: 8,
+    padding: 16,
+    marginBottom: 16,
+    marginHorizontal: 20,
+    marginVertical: 75,
+    elevation: 5,
+    flexDirection: "row",
+    alignItems: "center",
+    height: 250,
   },
-  closeIcon: {
-    alignSelf: "flex-end",
-    marginBottom: 10,
-    color: "#000",
+  backgroundImage: {
+    ...StyleSheet.absoluteFillObject,
   },
-  header: {
+  userPhoto: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    marginRight: 20,
+  },
+  userInfo: {
+    flex: 1,
+  },
+  userName: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 8,
+  },
+  userEmail: {
+    fontSize: 14,
+    color: "#888",
+  },
+  buttonInfo: {
+    marginRight: 10,
+    paddingVertical: 8,
+    paddingHorizontal: 20,
+    marginVertical: 10,
+    borderRadius: 20,
+    backgroundColor: "#F9A13C",
+  },
+  buttonText: {
+    color: "#fff",
+    fontWeight: "bold",
+    textAlign: "center",
+    
+  },
+
+  cardMenu: {
+    borderRadius: 10,
+    backgroundColor: "#fff",
+    padding: 16,
+    marginVertical: 10,
+    marginHorizontal: 20,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 16,
+    textAlign: "center",
+  },
+  menuContainer: {
+    justifyContent: "space-between",
+  },
+  optionItem: {
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 20,
+    
   },
-  profileImage: {
-    width: 60,
-    height: 60,
-    borderRadius: 50,
+  iconContainer: {
+    width: 40,
+    alignItems: "center",
   },
-  userInfo: {
-    marginLeft: 15,
+  optionLabel: {
+    flex: 1,
+    marginLeft: 10,
+    borderBottomColor: '#E5E5E5',
+    borderBottomWidth: 1,
+    padding: 10,
   },
-  menuItemContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  actionIconContainer: {
+    width: 24,
+    alignItems: "center",
   },
-  menuItemIcon: {
-    marginRight: 10,
-    color: '#000'
+  footerModal: {
+    flex: 1,
+    flexDirection: "column",
+    height: 100,
+    
+    marginHorizontal: 20,
+    marginBottom: 20,
   },
-  profileName: {
-    color: "#000",
-    fontSize: 18,
-    fontWeight: "bold",
+  titleFooter: {
+    fontSize: 13,
+    textAlign: "center",
+    color: "#969292",
   },
-  username: {
-    color: "#A7A7A7",
-    fontSize: 14,
-    marginTop: 5,
-  },
-  menuItem: {
-    color: "#000",
-    fontSize: 20,
-    fontWeight: "bold",
-    marginVertical: 15,
+  titleFooterRed: {
+    fontSize: 13,
+    textAlign: "center",
+    color: "#e97373",
   },
 });
 

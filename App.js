@@ -13,6 +13,9 @@ import Notification from "./src/components/notification/Main.jsx";
 import News from "./src/components/news/News.jsx";
 import Treatment from "./src/components/treatments/Main.jsx";
 import PaymentHistoryScreen from "./src/components/payments/Home.jsx";
+import AboutScreen from "./src/components/About/Main.jsx";
+import AppointmentDetails from "./src/components/appointmentDetails/Main.jsx";
+
 const Stack = createStackNavigator();
 export default function App() {
 
@@ -54,7 +57,9 @@ export default function App() {
             <Stack.Screen name="Home" component={MainScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Profile" component={Main} options={{ headerShown: false }} />
             <Stack.Screen name="EditProfile" component={EditProfile} options={{ headerShown: false }} />
+            <Stack.Screen name="About" component={AboutScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Notification" component={Notification} options={{ headerShown: false }} />
+            <Stack.Screen name='AppointmentDetails' component={AppointmentDetails} options={{headerShown: false}} />
           </Stack.Navigator>
         </NavigationContainer>
       )}

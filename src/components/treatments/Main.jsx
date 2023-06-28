@@ -52,7 +52,7 @@ const Treatment = ({ navigation }) => {
     },
     {
       id: "6",
-      title: "Tratamiento 2",
+      title: "Endodoncia",
       description: "Descripción del tratamiento 2",
       image:
         "https://firebasestorage.googleapis.com/v0/b/parcial-gps-pm2.appspot.com/o/peri.jpg?alt=media&token=7dd6d2b1-c0f7-4c77-b3b9-9320cdaa12c8",
@@ -72,8 +72,12 @@ const Treatment = ({ navigation }) => {
     return (
       <TouchableOpacity style={styles.treatmentCard}>
         <Image source={{ uri: item.image }} style={styles.treatmentImage} />
+        <View style={styles.textContainer}>
         <Text style={styles.treatmentTitle}>{item.title}</Text>
         <Text style={styles.treatmentDescription}>{item.description}</Text>
+       
+      </View>
+        
       </TouchableOpacity>
     );
   };
@@ -82,7 +86,7 @@ const Treatment = ({ navigation }) => {
     if (filter === "all") {
       return true;
     } else {
-      return treatment.category === filter;
+      return treatment.title === filter;
     }
   });
 
@@ -231,7 +235,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#61282D",
   },
   filterButtonText: {
-    color: "#000",
+    color: "#6e6b6b",
     
   },
   activeFilterButtonText: {
@@ -239,6 +243,8 @@ const styles = StyleSheet.create({
   },
   treatmentList: {
     flexGrow: 1,
+    marginHorizontal: 10,
+    marginVertical: 1,
   },
   treatmentCard: {
     flex: 1,
@@ -252,15 +258,19 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
+    
     margin: 8,
-    padding: 16,
+   
     alignItems: "center",
+    width: 300,
+    height:200,
+    overflow: 'hidden',
+
   },
   treatmentImage: {
-    width: 120,
-    height: 120,
-    borderRadius: 10,
-    marginBottom: 10,
+    width: '100%',
+    height: '100%',
+    
   },
   treatmentTitle: {
     fontSize: 16,
@@ -270,6 +280,14 @@ const styles = StyleSheet.create({
   treatmentDescription: {
     fontSize: 12,
     textAlign: "center",
+  },
+  textContainer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    
+    padding: 10,
   },
     emptyContainer: {
     flex: 1,

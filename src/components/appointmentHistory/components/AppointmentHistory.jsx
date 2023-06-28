@@ -1,13 +1,21 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { View, Text, StyleSheet, Image, FlatList } from 'react-native';
+import moment from 'moment';
+import 'moment/locale/es';
 
 const AppointmentHistoryScreen = () => {
+
+  useEffect(() => {
+    // Establecer el idioma español al cargar el componente
+    moment.locale('es');
+  }, []);
   const historyData = [
     {
       id: '1',
       doctor: {
         name: 'Dr. Juan Pérez',
-        photo: 'https://firebasestorage.googleapis.com/v0/b/parcial-gps-pm2.appspot.com/o/depositphotos_42930187-stock-photo-smiling-male-doctor-with-arms.jpg?alt=media&token=44a485b9-df4e-4806-81b8-9c9ac93721f3',
+        photo: 'https://source.unsplash.com/random/800x600/?cat',
       },
       date: '2023-06-15',
       time: '10:00 AM',
@@ -17,23 +25,63 @@ const AppointmentHistoryScreen = () => {
       id: '2',
       doctor: {
         name: 'Dr. María Gómez',
-        photo: 'https://firebasestorage.googleapis.com/v0/b/parcial-gps-pm2.appspot.com/o/imageLogo.png?alt=media&token=074b4e9d-93dd-4363-9c8b-54c380c1b41a',
+        photo: 'https://source.unsplash.com/random/800x600/?flappy',
       },
       date: '2023-06-16',
       time: '02:30 PM',
       status: 'missed',
     },
-    // Agrega más citas según sea necesario
+    {
+      id: '3',
+      doctor: {
+        name: 'Dr. Juan Pérez',
+        photo: 'https://source.unsplash.com/random/800x600/?user',
+      },
+      date: '2023-06-15',
+      time: '10:00 AM',
+      status: 'attended',
+    },
+    {
+      id: '4',
+      doctor: {
+        name: 'Dr. María Gómez',
+        photo: 'https://source.unsplash.com/random/800x600/?person',
+      },
+      date: '2023-06-16',
+      time: '02:30 PM',
+      status: 'missed',
+    },
+    {
+      id: '5',
+      doctor: {
+        name: 'Dr. Juan Pérez',
+        photo: 'https://source.unsplash.com/random/800x600/?city',
+      },
+      date: '2023-06-15',
+      time: '10:00 AM',
+      status: 'attended',
+    },
+    {
+      id: '6',
+      doctor: {
+        name: 'Dr. María Gómez',
+        photo: 'https://source.unsplash.com/random/800x600/?rose',
+      },
+      date: '2023-06-16',
+      time: '02:30 PM',
+      status: 'missed',
+    },
   ];
 
   const renderHistoryItem = ({ item }) => {
     const statusColor = item.status === 'attended' ? 'green' : 'red';
+    const formattedDate = moment(item.date).format('LL'); // Formatear la fecha en formato "15 de junio de 2023"
     return (
       <View style={styles.card}>
         <Image source={{ uri: item.doctor.photo }} style={styles.doctorPhoto} />
         <View style={styles.detailsContainer}>
           <Text style={styles.doctorName}>{item.doctor.name}</Text>
-          <Text style={styles.date}>{item.date}</Text>
+          <Text style={styles.date}>{formattedDate}</Text>
           <Text style={styles.time}>{item.time}</Text>
           <Text style={[styles.status, { color: statusColor }]}>
             {item.status === 'attended' ? 'Atendido' : 'No atendido'}

@@ -10,7 +10,7 @@ import {
   ScrollView,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import Icon from "react-native-vector-icons/MaterialIcons";
+import Icon from 'react-native-vector-icons/Feather';
 
 const News = ({ navigation }) => {
     const [filter, setFilter] = useState("all");
@@ -22,6 +22,7 @@ const News = ({ navigation }) => {
       fecha: "13/06/2023",
       likes: 10,
       dislikes: 2,
+      type: 'news',
       image:
         "https://firebasestorage.googleapis.com/v0/b/parcial-gps-pm2.appspot.com/o/Ivoclar-escaner-PrograScan-PS7.png?alt=media&token=9d33ab3e-9a20-4b58-8485-c626aa188306",
     },
@@ -32,6 +33,7 @@ const News = ({ navigation }) => {
       fecha: "13/06/2023",
       likes: 5,
       dislikes: 1,
+      type: 'promotion',
       image:
         "https://firebasestorage.googleapis.com/v0/b/parcial-gps-pm2.appspot.com/o/Dentistas_deteccion_cancer-oral.jpg?alt=media&token=4ada8136-952d-42e0-a67d-005dc52fd25a",
     },
@@ -42,6 +44,7 @@ const News = ({ navigation }) => {
       fecha: "13/06/2023",
       likes: 5,
       dislikes: 1,
+      type: 'news',
       image:
         "https://firebasestorage.googleapis.com/v0/b/parcial-gps-pm2.appspot.com/o/Numero-dentistas-Espana.jpg?alt=media&token=b230cd1d-0abf-48fd-903c-5aadaf2157a6",
     },
@@ -52,6 +55,7 @@ const News = ({ navigation }) => {
       fecha: "13/06/2023",
       likes: 5,
       dislikes: 1,
+      type: 'promotion',
       image:
         "https://firebasestorage.googleapis.com/v0/b/parcial-gps-pm2.appspot.com/o/Tecnologia_Odontologia_SEPA-Sevilla23.jpg?alt=media&token=f66deb30-92ba-4b80-bdbb-f25e295ea150",
     },
@@ -84,11 +88,11 @@ const News = ({ navigation }) => {
         <Text style={styles.newsDescription}>{item.description}</Text>
         <View style={styles.iconContainer}>
           <TouchableOpacity onPress={() => handleLike(item.id)}>
-            <Icon name="thumb-up" size={24} color="#61282d" />
+            <Icon name="thumbs-up" size={24} color="#61282d" />
           </TouchableOpacity>
           <Text style={styles.likeCount}>{item.likes}</Text>
           <TouchableOpacity onPress={() => handleDislike(item.id)}>
-            <Icon name="thumb-down" size={24} color="#61282d" />
+            <Icon name="thumbs-down" size={24} color="#61282d" />
           </TouchableOpacity>
           <Text style={styles.dislikeCount}>{item.dislikes}</Text>
         </View>
@@ -99,7 +103,7 @@ const News = ({ navigation }) => {
     if (filter === "all") {
       return true;
     } else {
-      return treatment.category === filter;
+      return treatment.type === filter;
     }
   });
 
@@ -132,37 +136,37 @@ const News = ({ navigation }) => {
           <TouchableOpacity
             style={[
               styles.filterButton,
-              filter === "Endodoncia" && styles.activeFilterButton,
+              filter === "news" && styles.activeFilterButton,
             ]}
-            onPress={() => handleFilter("Endodoncia")}
+            onPress={() => handleFilter("news")}
           >
             <Text
               style={[
                 styles.filterButtonText,
-                filter === "Endodoncia" && styles.activeFilterButtonText,
+                filter === "news" && styles.activeFilterButtonText,
               ]}
             >
-             Endodoncia
+             Noticias
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[
               styles.filterButton,
-              filter === "Prótesis Dental" && styles.activeFilterButton,
+              filter === "promotion" && styles.activeFilterButton,
             ]}
-            onPress={() => handleFilter("Prótesis Dental")}
+            onPress={() => handleFilter("promotion")}
           >
             <Text
               style={[
                 styles.filterButtonText,
-                filter === "Prótesis Dental" && styles.activeFilterButtonText,
+                filter === "promotion" && styles.activeFilterButtonText,
               ]}
             >
-              Prótesis Dental
+              Promociones
             </Text>
           </TouchableOpacity>
         </View>
-      {newsData.length > 0 ? (
+      {filteredTreatments.length > 0 ? (
        <View style={styles.listContainer}>
        <FlatList
          data={newsData}
@@ -220,7 +224,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
     paddingVertical: 8,
     paddingHorizontal: 16,
-    marginHorizontal: 10,
+    marginHorizontal: 15,
     marginVertical: 15,
     borderRadius: 20,
     backgroundColor: "#dbd4d4",
@@ -229,7 +233,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#61282D",
   },
   filterButtonText: {
-    color: "#000",
+    color: "#7c7979",
     
   },
   activeFilterButtonText: {
@@ -238,7 +242,7 @@ const styles = StyleSheet.create({
   newsItem: {
     marginBottom: 20,
     backgroundColor: '#fff',
-    borderRadius: 8,
+    borderRadius: 10,
     elevation: 5,
     shadowColor: '#000',
     shadowOffset: {
@@ -247,7 +251,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    marginHorizontal: 5,
+    marginHorizontal: 15,
   },
   newsImage: {
     width: '100%',

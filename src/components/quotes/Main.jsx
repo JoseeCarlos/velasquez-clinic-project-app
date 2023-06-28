@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from "react-native";
 import AppointmentList from "./appointmenList/main";
 import Header from "../header/main";
 
-const PendingAppointments = () => {
+const PendingAppointments = ({navigation}) => {
   // datos de ejemplo para la lista de citas pendientes
   const appointments = [
     { id: "1", name: "Juan", date: "2023-05-05", time: "14:30" },
@@ -13,9 +13,9 @@ const PendingAppointments = () => {
 
   return (
     <View style={styles.container}>
-      <Header title="Citas Pendientes" />
+      <Header title="Citas Pendientes" navigation={navigation} notificationCount={'3'} />
       <View style={styles.content}>
-        <AppointmentList appointments={appointments} />
+        <AppointmentList appointments={appointments} navigation={navigation} />
       </View>
     </View>
   );
